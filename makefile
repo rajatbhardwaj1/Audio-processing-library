@@ -1,34 +1,21 @@
-all: p1 p2 p7 p8
+all: p1 p2  p3
 	
 
 p1 : 
-	g++ -c -Wall -Werror -fPIC foo.cpp
+	g++ -c -Wall -Werror -fPIC audiolib.cpp
 
 
 p2 : 
-	g++ -shared -o libaudio.so foo.cpp
+	g++ -shared -o libaudio.so audiolib.o
 
 
-p3: 
-	g++  -Wall -o test main.cpp -L/home/rajat/Desktop/COL290/Subtask3/Audio-processing-library -laudio
-
-
-p4:
-	g++ -Wall -o test main.cpp  -L/home/rajat/Desktop/COL290/Subtask3/Audio-processing-library -Wl,-rpath=/home/rajat/Desktop/COL290/Subtask3/Audio-processing-library -laudio
-
-
-
-p6:
-	./test
-
-p7:
-	g++ -L/home/rajat/Desktop/COL290/Subtask3/Audio-processing-library -Wall -o test main.cpp -laudio -include cblas.h -I /opt/OpenBLAS/include/ -L/opt/OpenBLAS/lib -lopenblas -lpthread -lgfortran
-
-p8:
-	g++  -Wall -o test main.cpp -L/home/rajat/Desktop/COL290/Subtask3/Audio-processing-library -laudio -include cblas.h  -I /opt/OpenBLAS/include/ -L/opt/OpenBLAS/lib -lopenblas -lpthread -lgfortran -lm -Wl,-rpath=/home/rajat/Desktop/COL290/Subtask3/Audio-processing-library
+p3:
+	g++  -Wall -o yourcode.out main.cpp -L$(PWD) -laudio -include cblas.h  -I $(MKL_BLAS_PATH)/include/ -L$(MKL_BLAS_PATH)/lib -lopenblas -lpthread -lgfortran -lm -Wl,-rpath=$(PWD)
 
 
 clean:
-	rm -rf *.ext *.o *.so 
+	rm -rf *.ext *.o *.so  *.out
 
+
+.PHONY: clean
 
